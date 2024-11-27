@@ -9,4 +9,4 @@ export const Layout = {
 
 export const MaxNoteNumber = 127
 
-export const WHEEL_SCROLL_RATE = 1 / 120
+export const WHEEL_SCROLL_RATE = 1 / 100

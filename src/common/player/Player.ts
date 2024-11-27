@@ -16,6 +16,7 @@ import { ITrackMute } from "../trackMute/ITrackMute"
 import { DistributiveOmit } from "../types"
 import EventScheduler from "./EventScheduler"
 import { PlayerEvent, convertTrackEvents } from "./PlayerEvent"
+import AudioPlayer from "./AudioPlayer"
 
 export interface LoopSetting {
   begin: number
@@ -26,7 +27,7 @@ export interface LoopSetting {
 const TIMER_INTERVAL = 50
 const LOOK_AHEAD_TIME = 50
 const METRONOME_TRACK_ID = 99999
-export const DEFAULT_TEMPO = 120
+export const DEFAULT_TEMPO = 100
 
 export default class Player {
   private _currentTempo = DEFAULT_TEMPO
@@ -38,6 +39,8 @@ export default class Player {
   private _interval: number | null = null
   private _currentTick = 0
   private _isPlaying = false
+  private _audioPlayer: AudioPlayer | null = null
+  private _paused: boolean = false
 
   disableSeek: boolean = false
   isMetronomeEnabled: boolean = false
@@ -63,6 +66,8 @@ export default class Player {
     this._metronomeOutput = metronomeOutput
     this._trackMute = trackMute
     this._songStore = songStore
+    this._audioPlayer = new AudioPlayer();
+    this._audioPlayer?.loadAudio('/test.mp3')
   }
 
   private get song() {
@@ -97,10 +102,22 @@ export default class Player {
       this.timebase,
       TIMER_INTERVAL + LOOK_AHEAD_TIME,
     )
+
+    if(this._currentTick == 0)
+      this._audioPlayer?.play();
+    else
+      this._audioPlayer?.resume();
+
     this._isPlaying = true
-    this._output.activate()
+    // this._output.activate()
     this._interval = window.setInterval(() => this._onTimer(), TIMER_INTERVAL)
-    this._output.activate()
+    // this._output.activate()
+    // console.log("timebase", this._currentTick, this._currentTempo, this._audioPlayer?.currentTime)
+    this._audioPlayer?.setBPM(this._currentTempo);
+
+    // this._audioPlayer?.isPaused ?  this._audioPlayer?.resume() : this._audioPlayer?.play(this._scheduler.tickToMillisec(this._currentTick, this._currentTempo));
+    // if (this._audioPlayer) console.log('this is ', 2 * this._audioPlayer.currentTime - this._scheduler.tickToMillisec(this._currentTick, this._currentTempo))
+
   }
 
   set position(tick: number) {
@@ -184,9 +201,10 @@ export default class Player {
 
   stop() {
     this._scheduler = null
+    this._audioPlayer?.pause();
     this.allSoundsOff()
     this._isPlaying = false
-
+    this._paused = true;
     if (this._interval !== null) {
       clearInterval(this._interval)
       this._interval = null
@@ -195,7 +213,8 @@ export default class Player {
 
   reset() {
     this.resetControllers()
-    this.stop()
+    this.stop();
+    this._audioPlayer?.stop();
     this._currentTick = 0
   }
 

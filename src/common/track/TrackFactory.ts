@@ -22,7 +22,7 @@ export function conductorTrack(name = "") {
   const events = toTrackEvents([
     trackNameMidiEvent(0, name),
     timeSignatureMidiEvent(0),
-    setTempoMidiEvent(0, 60000000 / 120),
+    setTempoMidiEvent(0, 60000000 / 100),
     endOfTrackMidiEvent(0),
   ])
   track.addEvents(events)

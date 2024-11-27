@@ -18,7 +18,7 @@ export const songToSynthEvents = (
 
   let keyframe: Keyframe = {
     tick: 0,
-    bpm: 120,
+    bpm: 100,
     timestamp: 0,
   }
 

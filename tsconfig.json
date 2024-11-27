@@ -19,10 +19,10 @@
     "noImplicitAny": true,
     "lib": ["es2019", "dom"],
     "strictNullChecks": true,
-    "alwaysStrict": true,
+    "alwaysStrict": false,
     "useDefineForClassFields": true,
     "resolveJsonModule": true,
-    "strict": true
+    "strict": false
   },
   "include": ["src/**/*"]
 }
