@@ -253,7 +253,7 @@ export default class Player {
     },
     delayTime = 0,
   ) {
-    this._output.activate()
+    // this._output.activate()
     this.sendEvent(noteOnMidiEvent(0, channel, noteNumber, velocity), delayTime)
   }
 
