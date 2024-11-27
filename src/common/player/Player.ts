@@ -103,6 +103,8 @@ export default class Player {
       TIMER_INTERVAL + LOOK_AHEAD_TIME,
     )
 
+    this._audioPlayer?.setBPM(this._currentTempo);
+
     if(this._currentTick == 0)
       this._audioPlayer?.play();
     else
@@ -112,12 +114,6 @@ export default class Player {
     // this._output.activate()
     this._interval = window.setInterval(() => this._onTimer(), TIMER_INTERVAL)
     // this._output.activate()
-    // console.log("timebase", this._currentTick, this._currentTempo, this._audioPlayer?.currentTime)
-    this._audioPlayer?.setBPM(this._currentTempo);
-
-    // this._audioPlayer?.isPaused ?  this._audioPlayer?.resume() : this._audioPlayer?.play(this._scheduler.tickToMillisec(this._currentTick, this._currentTempo));
-    // if (this._audioPlayer) console.log('this is ', 2 * this._audioPlayer.currentTime - this._scheduler.tickToMillisec(this._currentTick, this._currentTempo))
-
   }
 
   set position(tick: number) {
@@ -276,7 +272,7 @@ export default class Player {
     delayTime: number = 0,
     timestampNow: number = performance.now(),
   ) {
-    this._output.sendEvent(event, delayTime, timestampNow)
+    // this._output.sendEvent(event, delayTime, timestampNow)
   }
 
   private syncPosition = throttle(() => {

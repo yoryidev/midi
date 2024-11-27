@@ -1,10 +1,12 @@
 import RootStore from "../stores/RootStore"
 
 export const playOrPause =
-  ({ player }: RootStore) =>
+  ({ player, pianoRollStore }: RootStore) =>
   () => {
     if (player.isPlaying) {
       player.stop()
+      player.position = 0
+      pianoRollStore.setScrollLeftInTicks(0)
     } else {
       player.play()
     }
