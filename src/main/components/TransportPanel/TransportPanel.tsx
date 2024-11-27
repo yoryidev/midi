@@ -88,19 +88,19 @@ export const TransportPanel: FC = observer(() => {
 
   return (
     <Toolbar>
-      <CircleButton onClick={onClickBackward}>
+      {/* <CircleButton onClick={onClickBackward}>
         <FastRewind />
-      </CircleButton>
+      </CircleButton> */}
 
-      <CircleButton onClick={onClickStop}>
+      {/* <CircleButton onClick={onClickStop}>
         <Stop />
-      </CircleButton>
+      </CircleButton> */}
       <MiddlePlayButton onClick={onClickPlay} isPlaying={isPlaying} />
       <PlayButton onClick={onClickPlay} isPlaying={isPlaying} />
 
-      <CircleButton onClick={onClickForward}>
+      {/* <CircleButton onClick={onClickForward}>
         <FastForward />
-      </CircleButton>
+      </CircleButton> */}
       {loop && (
         <LoopButton
           onClick={onClickEnableLoop}
